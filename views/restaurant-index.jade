@@ -1,9 +1,42 @@
 extends layout
 
 block content
+    .row
+        .col-sm-s6
+            .card.card-block
+                .card-title Add a restaurant
+                .card-text
+                    form(action='/restaurant/add/restaurant', method='post')
+                        .form-group
+                            label(for='name') Name
+                            input(type='text', name='name', id='name', class='form-control')
+                        .form-group
+                            label(for='address') Address
+                            input(type='text', name='address', id='address', class='form-control')
+                        .form-group
+                            label(for='city') City
+                            input(type='text', name='city', id='city', class='form-control')
+                        .form-group
+                            label(for='zip') Zip Code
+                            input(type='number', name='zip', id='zip', class='form-control', min='00000', max='99999')
+                        .form-group
+                            input(type='submit', name='submit', id='submit', class='form-control', value='submit')
+         .col-sm-s6
+            .card.card-block
+                .card-title Your restaurants
+                if restaurants
+                    ul
+                        each restaurant in restaurants
+                            li #{ restaurant.name }
+
+
+
+block menu
     if user
-        p Hello #{ user.username }
-        div
+        li(class='nav-item pull-xs-right')
+            span Hello,  #{ user.username }
+        li(class='nav-item pull-xs-right')
             a(href='/users/logout') Logout
     else
-        a(href='/users/login?type=owner') Login
+        li(class='nav-item pull-xs-right')
+            a(href='/users/login?type=owner') Login

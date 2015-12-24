@@ -1,9 +1,14 @@
 extends layout
 
 block content
+    
+    
+block menu
     if user
-        p Hello #{ user.username }
-        div
+        li(class='nav-item pull-xs-right')
+            span Hello, #{ user.username }
+        li(class='nav-item pull-xs-right')
             a(href='/users/logout') Logout
     else
-        a(href='/users/login?type=customer') Login
+        li(class='nav-item pull-xs-right')
+            a(class='nav-link', href='/users/login?type=customer') Login
