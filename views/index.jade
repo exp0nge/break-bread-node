@@ -2,6 +2,8 @@ extends layout
 
 block content
   h1= title
+  if user
+    p Hello, #{user.username}
   p 
     a(href='#{customer}') Customer 
   p

@@ -22,9 +22,11 @@ router.post('/login', function(req, res){
         }
         else{
             if (doc){
+                req.session_state.username = doc.username;
                 res.redirect('/');
             }
             else{
+                express.session_state.reset();
                 res.render('login', {error: 'Invalid login details'});
             }
         }
@@ -39,6 +41,11 @@ router.get('/register', function(req, res){
 router.post('/register', function(req, res){
     
 });
+
+router.post('logout', function(req, res){
+    req.session_state.reset();
+    res.redirect('/');
+})
 
 
 module.exports = router;

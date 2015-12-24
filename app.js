@@ -35,7 +35,12 @@ app.use(sessions({
     cookieName: 'breakSession',
     secret: 'kEayVt4t6i2RMtbtY8ch8OgrZ1INgCi2xEUgz+wgQpU=',
     duration: 24 * 60 * 60 * 1000,
-    activeDuration: 1000 * 60 * 5
+    activeDuration: 1000 * 60 * 5,
+    cookie: {
+        path: '/',
+        httpOnly: false,
+        maxAge: 24 * 60 * 60 * 1000
+    }
 }));
 
 
