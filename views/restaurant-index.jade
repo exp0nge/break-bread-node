@@ -2,7 +2,7 @@ extends layout
 
 block content
     .row
-        .col-sm-s6
+        .col-sm-6
             .card.card-block
                 .card-title Add a restaurant
                 .card-text
@@ -21,7 +21,7 @@ block content
                             input(type='number', name='zip', id='zip', class='form-control', min='00000', max='99999')
                         .form-group
                             input(type='submit', name='submit', id='submit', class='form-control', value='submit')
-         .col-sm-s6
+         .col-sm-6
             .card.card-block
                 .card-title Your restaurants
                 if restaurants
