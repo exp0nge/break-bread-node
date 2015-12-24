@@ -18,15 +18,16 @@ router.post('/login', function(req, res){
         password: req.body.password
         }, function(err, doc){
         if (err){
+            req.session.reset();
             console.log(err);
         }
         else{
             if (doc){
-                req.session_state.username = doc.username;
+                req.session.username = doc.username;
                 res.redirect('/');
             }
             else{
-                express.session_state.reset();
+                req.session.reset();
                 res.render('login', {error: 'Invalid login details'});
             }
         }
@@ -42,8 +43,8 @@ router.post('/register', function(req, res){
     
 });
 
-router.post('logout', function(req, res){
-    req.session_state.reset();
+router.get('/logout', function(req, res){
+    req.session.reset();
     res.redirect('/');
 })
 

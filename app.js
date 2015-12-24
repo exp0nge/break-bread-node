@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var sessions = require('client-sessions');
+var sessions = require('express-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -32,15 +32,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Sessions middleware
 app.use(sessions({
-    cookieName: 'breakSession',
     secret: 'kEayVt4t6i2RMtbtY8ch8OgrZ1INgCi2xEUgz+wgQpU=',
     duration: 24 * 60 * 60 * 1000,
     activeDuration: 1000 * 60 * 5,
-    cookie: {
-        path: '/',
-        httpOnly: false,
-        maxAge: 24 * 60 * 60 * 1000
-    }
+    resave: false,
+    saveUninitialized: true,
 }));
 
 
