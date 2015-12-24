@@ -3,5 +3,7 @@ extends layout
 block content
     if user
         p Hello #{ user.username }
+        div
+            a(href='/users/logout') Logout
     else
         a(href='/users/login?type=customer') Login

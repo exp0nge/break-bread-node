@@ -2,11 +2,28 @@ extends layout
 
 block content
   h1= title
-  p 
-    a(href='#{customer}') Customer 
-  p
-    a(href='#{restaurant}') Restaurant
-  if restaurants
-    ul
+  .row
+    .col-sm-6
+        div(class='card card-inverse card-info text-xs-center')
+            .card-block
+                .blockquote(class='card-blockquote')
+                    p 
+                        | You want to reserve a spot at a restaurant. <br>
+                        a(href='#{customer}') Customer 
+    .col-sm-6
+            div(class='card card-inverse card-info text-xs-center')
+                .card-block
+                    .blockquote(class='card-blockquote')                      
+                        p
+                            | You are a restaurant owner. <br>
+                            a(href='#{restaurant}') Restaurant
+                        if restaurants
+    
+    .row
         each restaurant in restaurants
-            li= restaurant.name
+            .col-sm-6
+                div(class='card card-block')
+                    h3(class='card-title') #{ restaurant.name }
+                    p(class='card-text') 
+                        |#{ restaurant.address } <br>
+                        |#{ restaurant.city }, #{ restaurant.zip }

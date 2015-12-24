@@ -2,6 +2,12 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css')
   body
-    block content
+    nav(class='navbar navbar-fixed-top navbar-dark bg-inverse')
+        a(class='navbar-brand', href='#') Break Bread
+        ul(class='nav navbar-nav')
+            li(class='nav-item')
+                a(class='nav-link', href='/') Home
+    .container
+        block content
