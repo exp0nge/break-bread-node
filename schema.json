@@ -1,0 +1,59 @@
+{
+    "customer": {
+        "username": "str",
+        "password": "str",
+        "email": "str",
+        "transactions": []
+    },
+    "owner": {
+        "username": "str",
+        "password": "str",
+        "email": "str",
+        "restaurant": "str"
+    },
+    "restaurant": {
+        "name": "str",
+        "address": "str",
+        "city": "str",
+        "zip": "int",
+        "items": [
+            {
+                "name": "str",
+                "price": "float",
+                "ingredients": "str"
+            }
+        ]
+    },
+    "transaction": {
+        "restaurant": "id",
+        "total": "int",
+        "paid": "bool",
+        "approved": "bool",
+        "items": [
+            {
+                "name": "str",
+                "quantity": "int"  
+            }
+        ]
+    },
+    
+    "testdata": {
+        "customer": [
+            {
+                "username": "md",
+                "password": "md",
+                "email": "md@gmail.com",
+                "transactions": []
+            }
+        ],
+        "owner": [
+            {
+                "username": "owner",
+                "password": "owner",
+                "email": "owner@gmail.com",
+                "restaurant": ""
+            }
+        ]
+    }
+    
+}

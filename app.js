@@ -39,7 +39,6 @@ app.use(sessions({
     saveUninitialized: true,
 }));
 
-
 app.use(function(res, req, next){
     res.db = db;
     next();

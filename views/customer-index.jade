@@ -1,3 +1,7 @@
 extends layout
 
 block content
+    if user
+        p Hello #{ user.username }
+    else
+        a(href='/users/login?type=customer') Login

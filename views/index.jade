@@ -2,9 +2,11 @@ extends layout
 
 block content
   h1= title
-  if username
-    p Hello, #{username}
   p 
     a(href='#{customer}') Customer 
   p
     a(href='#{restaurant}') Restaurant
+  if restaurants
+    ul
+        each restaurant in restaurants
+            li= restaurant.name

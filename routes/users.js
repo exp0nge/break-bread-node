@@ -11,20 +11,31 @@ router.get('/login', function(req, res){
 });
 
 router.post('/login', function(req, res){
-    var db = req.db;
-    var users = db.get('users');
+    var type = req.query.type;
+    var users = req.db.get(type);
     users.findOne({
         username: req.body.username,
         password: req.body.password
         }, function(err, doc){
         if (err){
-            req.session.reset();
-            console.log(err);
+            req.session.username = '';
+            res.render('login', {
+               message: 'Invalid login details'
+            })
         }
         else{
             if (doc){
-                req.session.username = doc.username;
-                res.redirect('/');
+                req.session.user = doc;
+                if (type == 'customer'){
+                    res.redirect('/customer');
+                }
+                else if (type == 'owner'){
+                    res.redirect('/restaurant');
+                }
+                else {
+                    res.redirect('/');
+                }
+                
             }
             else{
                 req.session.reset();
@@ -44,7 +55,7 @@ router.post('/register', function(req, res){
 });
 
 router.get('/logout', function(req, res){
-    req.session.reset();
+    req.session.username = '';
     res.redirect('/');
 })
 
