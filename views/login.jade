@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h1= Login
+    if error
+        h2(style="color:red") #{error}
+    form(name="login", method="post")
+        div.input
+            span.label Login
+            input(type='text', name='username')
+            span.label Password
+            input(type='password', name='password')
+        div.actions
+            input(type='submit', value='login')

@@ -13,6 +13,22 @@ router.get('/login', function(req, res){
 router.post('/login', function(req, res){
     var db = req.db;
     var users = db.get('users');
+    users.findOne({
+        username: req.body.username,
+        password: req.body.password
+        }, function(err, doc){
+        if (err){
+            console.log(err);
+        }
+        else{
+            if (doc){
+                res.redirect('/');
+            }
+            else{
+                res.render('login', {error: 'Invalid login details'});
+            }
+        }
+    });
 });
 
 
