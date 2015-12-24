@@ -25,10 +25,30 @@ block content
             .card.card-block
                 .card-title Your restaurants
                 if restaurants
-                    ul
-                        each restaurant in restaurants
-                            li #{ restaurant.name }
-
+                    each restaurant in restaurants
+                        .card.card-block 
+                            .card-title 
+                                | #{ restaurant.name } 
+                                a(href='##{ restaurant.name }', class='btn btn-primary btn-sm pull-xs-right', data-toggle='collapse', aria-expanded='false', aria-controls='#{ restaurant.name }') Add food
+                                | <br>
+                                .collapse(id='#{ restaurant.name }')
+                                    .card.card-block
+                                        form(action='/restaurant/#{ restaurant._id }/add/food', method='post')
+                                            .form-group
+                                                label(for='name') Name of food
+                                                input(type='text', name='name', id='name', class='form-control')
+                                            .form-group
+                                                label(for='price') Price
+                                                input(type='number', name='price', id='price', class='form-control', min='0', max='999')
+                                            .form-group
+                                                label(for='ingredients') Ingredients (Allergies)
+                                                textarea(name='ingredients', rows='6', class='form-control')
+                                            .form-group
+                                                input(type='submit', name='submit', class='form-control', value='submit')  
+                            .card-text
+                                ul(class='list-group')
+                                    each item in restaurant.items
+                                        li(class='list-group-item') #{ item.name } - #{ item.price }
 
 
 block menu

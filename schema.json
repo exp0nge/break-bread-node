@@ -51,7 +51,7 @@
                 "username": "owner",
                 "password": "owner",
                 "email": "owner@gmail.com",
-                "restaurant": ""
+                "restaurant": []
             }
         ]
     }
