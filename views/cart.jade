@@ -6,9 +6,11 @@ block content
         .alert.alert-warning(role='alert')
           | <strong> 0 items in cart </strong>
     else
-        for restaurant in cart
-            .card.card-block
-                .card-text
-                    for item in restaurant
-                        p #{ item.item.name } - Qty: #{ item.qty }
+        .row
+            .col-sm-6
+                for restaurant in cart
+                    .card.card-block
+                        .card-text
+                            for item in restaurant.added
+                                p #{ item.item.name } - Qty: #{ item.qty }
       

@@ -67,9 +67,12 @@ router.post('/add/to/cart/:restaurantId/:food', function(req, res, next){
             }
             if (req.session.user.cart[restaurantId] === undefined){
                 // Restaurant not in cart, add it
-                req.session.user.cart[restaurantId] = [];
+                req.session.user.cart[restaurantId] = {
+                    added: [],
+                    info: null
+                };
             }
-            req.session.user.cart[restaurantId].push({
+            req.session.user.cart[restaurantId].added.push({
                 item: food,
                 qty: req.body.qty
             });
@@ -86,8 +89,9 @@ router.get('/cart', function(req, res, next){
     if (!req.session.user){
         res.redirect('/users/login?type=customer&next=/customer/cart');
     }
-    if (req.session.user.cart == undefined){
+    if (req.session.user.cart == undefined || Object.keys(req.session.user.cart).length){
       req.session.user.cart = {};
+      req.session.user.cart.length = 0;
       res.render('cart', {
           title: 'Cart',
           cart: req.session.user.cart,
@@ -96,10 +100,11 @@ router.get('/cart', function(req, res, next){
     }
     else {
         var cartKeys = Object.keys(req.session.user.cart);
+        console.log(cartKeys);
         req.db.get('restaurant').find({ _id: { $in: cartKeys }})
             .success(function(doc){
                 console.log(doc);
-                console.log(req.session.user.cart);
+                req.session.user.cart.length = cartKeys.length;
                 res.render('cart', {
                     title: 'Cart',
                     cart: req.session.user.cart,
