@@ -92,13 +92,19 @@ router.get('/cart', function(req, res, next){
           title: 'Cart',
           cart: req.session.user.cart,
           user: req.session.user
-      })
+      });
     }
     else {
-        console.log(Object.keys(req.session.user.cart));
-        req.db.get('restaurant').find({ _id: { $in: Object.keys(req.session.user.cart) }})
+        var cartKeys = Object.keys(req.session.user.cart);
+        req.db.get('restaurant').find({ _id: { $in: cartKeys }})
             .success(function(doc){
                 console.log(doc);
+                console.log(req.session.user.cart);
+                res.render('cart', {
+                    title: 'Cart',
+                    cart: req.session.user.cart,
+                    user: req.session.user
+                });
             })
             .error(function(err){
                 console.log(err);
