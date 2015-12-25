@@ -61,6 +61,7 @@ router.post('/add/to/cart/:restaurantId/:food', function(req, res, next){
     var restaurantId = req.params.restaurantId;
     req.db.get('restaurant').findById(restaurantId)
         .success(function(doc){
+            req.session.user.cartSize += 1;
             var food = doc.items[req.params.food];
             if (req.session.user.cart === undefined){
                 req.session.user.cart = {};
@@ -83,7 +84,6 @@ router.post('/add/to/cart/:restaurantId/:food', function(req, res, next){
             console.log(err);
         });
 });
-
 
 router.get('/cart', function(req, res, next){
     if (!req.session.user){
@@ -111,8 +111,6 @@ router.get('/cart', function(req, res, next){
                 doc.forEach(function(restaurant){
                     req.session.user.cart[restaurant._id.toString()].info = restaurant;
                 });
-                req.session.user.cartSize = cartKeys.length;
-                console.log(req.session.user.cart);
                 res.render('cart', {
                     title: 'Cart',
                     cart: req.session.user.cart,
@@ -126,6 +124,58 @@ router.get('/cart', function(req, res, next){
     else {
         renderEmpty();
     }
+
+});
+
+router.get('/cart/:restaurantId/payment', function(req, res, next){
+    // Party size, date, and time in query string
+    var items = req.session.user.cart[req.params.restaurantId].added;
+    var totalCost = 0;
+    items.forEach(function(item){
+        totalCost += (parseFloat(item.item.price) * parseFloat(item.qty));
+    });
+    var reservation = {
+        size: req.query.size,
+        date: req.query.date,
+        time: req.query.time,
+        restaurant: req.params.restaurantId
+    }
+    res.render('payment', {
+        title: 'Payment',
+        order: items,
+        totalCost: totalCost,
+        reservation: reservation,
+        user: req.session.user
+    });
+});
+
+router.post('/cart/:restaurantId/payment/charge', function(req, res, next){
+    var restID = req.params.restaurantId;
+    var transaction = {
+        'restaurant': restID,
+        'paid': true,
+        'approved': false,
+        'reservation': {
+            'size': req.body.size,
+            'date': req.body.date,
+            'time': req.body.time,
+            'total': req.body.totalCost
+        },
+        'items': req.session.user.cart[restID].added
+    }
+    req.db.get('transaction').insert(transaction)
+        .success(function(doc){
+            req.db.get('customer').update(
+                { username: req.session.user.username },
+                { $push: { transactions: doc._id }})
+                .success(function(doc){
+                    console.log('success');
+                })
+                .error(function(err){
+                    console.log(err);
+                });
+        })
+        .error(function(err){ console.log(err); });
 
 });
 

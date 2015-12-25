@@ -30,7 +30,7 @@ block content
                             form(action='/customer/add/to/cart/#{ restaurant._id }/#{ i }', method='post')
                                 .form-group
                                     label(for='qty') Qty
-                                    input(type='number', name='qty', id='qty', class='form-control', min='0', max='20', required)
+                                    input(type='number', name='qty', id='qty', class='form-control', min='1', max='30', required)
                                 .form-group
                                     input(type='submit', name='submit', class='form-control btn-primary', value='Add to cart')
                         else

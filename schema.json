@@ -27,9 +27,14 @@
     },
     "transaction": {
         "restaurant": "id",
-        "total": "int",
         "paid": "bool",
         "approved": "bool",
+        "reservation": {
+            "size": "str",
+            "date": "str",
+            "time": "str",
+            "total": "float"
+        },
         "items": [
             {
                 "name": "str",

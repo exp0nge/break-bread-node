@@ -25,16 +25,18 @@ block content
                             hr
                             h5 Reservation Info
                                 hr
-                                form(method='post', action='')
+                                form(method='get', action='/customer/cart/#{ restaurant.info._id }/payment')
                                     .form-group
                                         label(for='#{ restaurant.info._id }size') Party size
-                                        input(type='number', class='form-control', min='1', value='1', id='#{ restaurant.info._id }size', name='#{ restaurant.info._id }size', required)
+                                        input(type='number', class='form-control', min='1', value='1', id='#{ restaurant.info._id }size', name='size', required)
                                     .form-group
+                                        - var now = (new Date()).toISOString().slice(0, 10)
                                         label(for='#{ restaurant.info._id }date') Date
-                                        input(type='date', class='form-control', id='#{ restaurant.info._id }date', name='#{ restaurant.info._id }date', required)
+                                        input(type='date', class='form-control', value='#{ now }', id='#{ restaurant.info._id }date', name='date', required)
                                     .form-group
-                                        label(for='#{ restaurant.info._id }size') Time
-                                        input(type='time', class='form-control', id='#{ restaurant.info._id }time', name='#{ restaurant.info._id }time', required)
+                                        - var now_t = (new Date()).toISOString().slice(11, 16)
+                                        label(for='#{ restaurant.info._id }time') Time
+                                        input(type='time', class='form-control', value='#{ now_t }', id='#{ restaurant.info._id }time', name='time', required)
                                     .form-group
                                         input(type='submit', class='form-control btn btn-primary', value='Continue to payment')
                                         small(class='text-muted') Restaurants can deny reservations. Don't worry, you will be refunded.

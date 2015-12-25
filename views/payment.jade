@@ -1,0 +1,41 @@
+extends layout
+
+block content
+    .row
+        .col-sm-6
+            .card.card-block
+                h4(class='card-title') Your order summary
+                .card-text
+                    ul(class='list-group')
+                        for item in order
+                            li(class='list-group-item') 
+                                | #{ item.item.name }
+                                - var cost = parseFloat(item.qty) * parseFloat(item.item.price)
+                                span(class='label label-info label-pill pull-xs-right') Total: $ #{ cost }
+                                span(class='label label-primary label-pill pull-xs-right') Qty: #{ item.qty }
+                                span(class='label label-primary label-pill pull-xs-right') $ #{ item.item.price } ea.
+                    hr
+                    h4(class='pull-xs-right') 
+                        | Total:  
+                        span(class='label label-info label-pill pull-xs-right') $#{ totalCost }
+                        hr
+                    h4(class='card-title') Your reservation information
+                        hr
+                        p Party size: #{ reservation.size }
+                        p Date: #{ reservation.date}
+                        p Time: #{ reservation.time }
+                    
+        .col-sm-6
+            .card.card-block
+                h4(class='card-title') Payment
+                .card-text
+                    span(class='text-muted') This is where you would collect credit card info.
+                    form(action='/customer/cart/#{ reservation.restaurant }/payment/charge', method='post')
+                        .form-group
+                            input(type='hidden', value='#{ reservation.size }', name='size')
+                            input(type='hidden', value='#{ reservation.date }', name='date')
+                            input(type='hidden', value='#{ reservation.time }', name='time')
+                            input(type='hidden', value='#{ totalCost }', name='totalCost')
+                        .form-group
+                            input(type='submit', class='form-control btn btn-primary', value='Pay')
+                    
