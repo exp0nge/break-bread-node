@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h1= title
+    if cart.length == 0
+        .alert.alert-warning(role='alert')
+          | <strong> 0 items in cart </strong>
+    else
+        for restaurant in cart
+            .card.card-block
+                .card-text
+                    for item in restaurant
+                        p #{ item.item.name } - Qty: #{ item.qty }
+      
