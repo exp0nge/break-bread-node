@@ -37,8 +37,29 @@ router.get('/:restaurantId/view', function(req, res, next){
             res.render('restaurant-info', {
                 restaurant: doc,
                 user: req.session.user,
-                nextUrl: '/customer/' + req.params.restaurantId + '/view'
+                nextUrl: '/customer/' + req.params.restaurantId + '/view',
+                addedFood: req.query.added
             })
+        })
+        .error(function(err){
+            console.log(err);
+        });
+});
+
+router.post('/add/to/cart/:restaurantId/:food', function(req, res, next){
+    req.db.get('restaurant').findById(req.params.restaurantId)
+        .success(function(doc){
+            var food = doc.items[req.params.food];
+            if (req.session.user.cart === undefined){
+                req.session.user.cart = [];
+            }
+            req.session.user.cart.push({
+                restaurant: req.params.restaurantId,
+                item: food,
+                qty: req.body.qty
+            });
+            food = encodeURIComponent(food.name);
+            res.redirect('/customer/' + req.params.restaurantId + '/view?added=' + food)
         })
         .error(function(err){
             console.log(err);

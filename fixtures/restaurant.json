@@ -3,5 +3,5 @@
 {"_id":{"$oid":"567c70116c297ce8fb9459a2"},"name":"md","address":"md","city":"md","zip":"11111","items":[]}
 {"_id":{"$oid":"567c704646a087c4e4e5c107"},"name":"Starbucks","address":"123 Bucks","city":"Brooklyn","zip":"11218","items":[]}
 {"_id":{"$oid":"567c81a9850ab3d912bee2b2"},"name":"Starbucks","address":"123 Buck","city":"Brooklyn","zip":"11218","items":[{"name":"coffe","price":"3","ingredients":"3"}]}
-{"_id":{"$oid":"567c85a2cd41828913943aad"},"name":"CafeOne","address":"160 Convent","city":"Manhattan","zip":"10021","items":[]}
+{"_id":{"$oid":"567c85a2cd41828913943aad"},"name":"CafeOne","address":"160 Convent","city":"Manhattan","zip":"10021","items":[{"name":"chicken wings","price":"10","ingredients":"chiken"}]}
 {"_id":{"$oid":"567c8793fe80044d1134e0c2"},"name":"Breakroom","address":"160 convent avenue","city":"manhttan","zip":"10031","items":[{"name":"chinese","price":"3","ingredients":"chinese food"}]}
