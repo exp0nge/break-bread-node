@@ -13,7 +13,8 @@ router.get('/', function(req, res, next){
                     {
                         title: 'Restaurant Dashboard',
                         user: req.session.user,
-                        restaurants: rests
+                        restaurants: rests,
+                        home: '/restaurant'
                     });
                 })
                 .error(function(err){
@@ -23,10 +24,6 @@ router.get('/', function(req, res, next){
         .error(function(err){
             console.log(err);
         })
-});
-
-router.get('/add/restaurant', function(req, res, next){
-    res.render('add-restaurant')
 });
 
 router.post('/add/restaurant', function(req, res, next){
@@ -52,10 +49,6 @@ router.post('/add/restaurant', function(req, res, next){
             console.log(err);
         });
     
-});
-
-router.get('/:restaurantId/add/food', function(req, res, next){
-    res.render('add-food', {name: req.params.restaurantId})
 });
 
 router.post('/:restaurantId/add/food', function(req, res, next){

@@ -5,7 +5,8 @@ router.get('/', function(req, res, next){
     res.render('customer-index', {
             title: 'Customer Dashboard',
             user: req.session.user,
-            nextUrl: '/customer'
+            nextUrl: '/customer',
+            home: '/customer',
         });
 });
 
@@ -24,7 +25,8 @@ router.get('/search/', function(req, res, next){
                 user: req.session.user,
                 restaurants: doc,
                 q: req.query.q,
-                nextUrl: '/customer/search?q=' + req.query.q
+                nextUrl: '/customer/search?q=' + req.query.q,
+                home: '/customer',
             });
         }
     })
@@ -38,7 +40,8 @@ router.get('/:restaurantId/view', function(req, res, next){
                 restaurant: doc,
                 user: req.session.user,
                 nextUrl: '/customer/' + req.params.restaurantId + '/view',
-                addedFood: req.query.added
+                addedFood: req.query.added,
+                home: '/customer',
             })
         })
         .error(function(err){
@@ -64,6 +67,11 @@ router.post('/add/to/cart/:restaurantId/:food', function(req, res, next){
         .error(function(err){
             console.log(err);
         });
+});
+
+
+router.get('/cart', function(req, res, next){
+    res.json(req.session.user.cart);
 });
 
 module.exports = router;

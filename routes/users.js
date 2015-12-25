@@ -1,9 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
+
+function logout(req){
+    req.session.user = '';
+}
+
+
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.redirect('/login');
 });
 
 router.get('/login', function(req, res){
@@ -18,7 +23,7 @@ router.post('/login', function(req, res){
         password: req.body.password
         }, function(err, doc){
         if (err){
-            req.session.user = '';
+            logout(req);
             res.render('login', {
                message: 'Invalid login details'
             })
@@ -38,12 +43,13 @@ router.post('/login', function(req, res){
                     res.redirect('/restaurant');
                 }
                 else {
+                    logout(req);
                     res.redirect('/');
                 }
                 
             }
             else{
-                req.session.user = '';
+                logout(req);
                 res.render('login', {error: 'Invalid login details'});
             }
         }
@@ -60,7 +66,7 @@ router.post('/register', function(req, res){
 });
 
 router.get('/logout', function(req, res){
-    req.session.user = '';
+    logout(req);
     res.redirect('/');
 })
 

@@ -1,22 +1,22 @@
 extends layout
 
 block content
-  h1= title
   .row
+    include restaurants-loop
+    hr
+    h1= title
     .col-sm-6
         div(class='card card-inverse card-info text-xs-center')
             .card-block
                 .blockquote(class='card-blockquote')
                     p 
                         | You want to reserve a spot at a restaurant. <br>
-                        a(href='#{ customer }') Customer 
+                        a(href='#{ customer }', class='btn btn-primary') Customer 
     .col-sm-6
             div(class='card card-inverse card-info text-xs-center')
                 .card-block
                     .blockquote(class='card-blockquote')                      
                         p
                             | You are a restaurant owner. <br>
-                            a(href='/users/login?type=owner') Owner
+                            a(href='/users/login?type=owner', class='btn btn-primary') Owner
                         if restaurants
-    
-    include restaurants-loop

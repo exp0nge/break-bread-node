@@ -21,7 +21,8 @@ block content
             form(name='guestLogin', method='post', action='/users/login/guest')
                 .form-group
                     span(class='label label-pill label-info pull-xs-right') Quick access
-                    label(for='guestname') Login as a guest 
-                    input(type='text', name='guestname', class='form-control', id='guestname', required)
+                    label(for='guestemail') Login as a guest with an email
+                    input(type='email', name='guestemail', class='form-control', id='guestemail', required)
+                    small(class='text-muted') Emails are not shared and are purged. We'll email you a receipt for any orders.
                 .form-group
                     input(type='submit', value='Guest Login', class='form-control btn btn-secondary')
