@@ -15,6 +15,7 @@
         "name": "str",
         "address": "str",
         "city": "str",
+        "state": "str",
         "zip": "int",
         "items": [
             {
@@ -32,11 +33,11 @@
         "items": [
             {
                 "name": "str",
-                "quantity": "int"  
+                "quantity": "int"
             }
         ]
     },
-    
+
     "testdata": {
         "customer": [
             {
@@ -55,5 +56,5 @@
             }
         ]
     }
-    
+
 }

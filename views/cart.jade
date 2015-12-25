@@ -27,13 +27,14 @@ block content
                                 hr
                                 form(method='post', action='')
                                     .form-group
-                                        label(for='#{ restaurant.info._id }size') Size
-                                        input(type='number', class='form-control', min='1', value='1', id='#{ restaurant.info._id }size')
+                                        label(for='#{ restaurant.info._id }size') Party size
+                                        input(type='number', class='form-control', min='1', value='1', id='#{ restaurant.info._id }size', name='#{ restaurant.info._id }size', required)
                                     .form-group
                                         label(for='#{ restaurant.info._id }date') Date
-                                        input(type='date', class='form-control', id='#{ restaurant.info._id }date')
+                                        input(type='date', class='form-control', id='#{ restaurant.info._id }date', name='#{ restaurant.info._id }date', required)
                                     .form-group
                                         label(for='#{ restaurant.info._id }size') Time
-                                        input(type='time', class='form-control', id='#{ restaurant.info._id }time')
+                                        input(type='time', class='form-control', id='#{ restaurant.info._id }time', name='#{ restaurant.info._id }time', required)
                                     .form-group
                                         input(type='submit', class='form-control btn btn-primary', value='Continue to payment')
+                                        small(class='text-muted') Restaurants can deny reservations. Don't worry, you will be refunded.
