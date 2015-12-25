@@ -108,8 +108,11 @@ router.get('/cart', function(req, res, next){
         }
         req.db.get('restaurant').find({ _id: { $in: cartKeys }})
             .success(function(doc){
-                console.log(doc);
+                doc.forEach(function(restaurant){
+                    req.session.user.cart[restaurant._id.toString()].info = restaurant;
+                });
                 req.session.user.cartSize = cartKeys.length;
+                console.log(req.session.user.cart);
                 res.render('cart', {
                     title: 'Cart',
                     cart: req.session.user.cart,

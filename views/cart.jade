@@ -7,10 +7,33 @@ block content
           | <strong> 0 items in cart </strong>
     else
         .row
-            .col-sm-6
-                for restaurant in cart
+            for restaurant in cart
+                .col-sm-6
                     .card.card-block
+                        h4(class='card-title') 
+                            a(href='/customer/#{ restaurant.info._id}/view') #{ restaurant.info.name }
+                        hr
                         .card-text
-                            for item in restaurant.added
-                                p #{ item.item.name } - Qty: #{ item.qty }
-      
+                            ul(class='list-group')
+                                for item in restaurant.added
+                                    li(class='list-group-item') 
+                                        | #{ item.item.name }
+                                        span(class='label label-danger label-pill pull-xs-right') 
+                                            a(href='#', class='no-a') Delete
+                                        span(class='label label-primary label-pill pull-xs-right') Qty: #{ item.qty }
+                                        
+                            hr
+                            h5 Reservation Info
+                                hr
+                                form(method='post', action='')
+                                    .form-group
+                                        label(for='#{ restaurant.info._id }size') Size
+                                        input(type='number', class='form-control', min='1', value='1', id='#{ restaurant.info._id }size')
+                                    .form-group
+                                        label(for='#{ restaurant.info._id }date') Date
+                                        input(type='date', class='form-control', id='#{ restaurant.info._id }date')
+                                    .form-group
+                                        label(for='#{ restaurant.info._id }size') Time
+                                        input(type='time', class='form-control', id='#{ restaurant.info._id }time')
+                                    .form-group
+                                        input(type='submit', class='form-control btn btn-primary', value='Continue to payment')
