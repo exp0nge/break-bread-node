@@ -99,11 +99,13 @@ router.get('/cart', function(req, res, next){
         });
     }
     if (req.session.user.cart == undefined){
-      renderEmpty();
+        renderEmpty();
     }
     else if(Object.keys(req.session.user.cart).length > 0)  {
         var cartKeys = Object.keys(req.session.user.cart);
-        console.log(cartKeys);
+        for (var i = 0; i < cartKeys.length; i++){
+            cartKeys[i] = new req.ObjectID(cartKeys[i]);
+        }
         req.db.get('restaurant').find({ _id: { $in: cartKeys }})
             .success(function(doc){
                 console.log(doc);

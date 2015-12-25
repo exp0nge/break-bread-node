@@ -11,7 +11,7 @@ var users = require('./routes/users');
 var customer = require('./routes/customer');
 var restaurant = require('./routes/restaurant');
 
-var mongo = require('mongodb')
+var ObjectID = require('mongodb').ObjectID;
 var monk = require('monk')
 var db = monk('localhost:27017/break-bread')
 
@@ -46,6 +46,9 @@ db.get('restaurant').col.reIndex();
 
 app.use(function(res, req, next){
     res.db = db;
+    res.ObjectID = function (stringId){
+        return ObjectID(stringId);
+    }
     next();
 });
 app.use('/', routes);
