@@ -46,7 +46,7 @@ router.post('/login', function(req, res){
                     logout(req);
                     res.redirect('/');
                 }
-                
+
             }
             else{
                 logout(req);
@@ -62,7 +62,7 @@ router.get('/register', function(req, res){
 });
 
 router.post('/register', function(req, res){
-    
+
 });
 
 router.get('/logout', function(req, res){
