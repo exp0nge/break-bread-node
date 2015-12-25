@@ -1,7 +1,24 @@
 extends layout
 
 block content
-    
+    .row
+        .col-sm-6
+            h3 Search
+    .row
+        .col-sm-12
+            form(method='get', action='')
+                .row
+                    .col-sm-6
+                        .form-group
+                            label(for='q') Location
+                            input(type='text', id='q', name='q', class='form-control', placeholder='e.g., brooklyn', required)
+                    .col-sm-6
+                        .form-group
+                            label(for='food') Type of food
+                            input(type='text', id='food', name='food', class='form-control', placeholder='e.g., mexican')
+                         .form-group
+                            input(type='submit', value='search', class='btn btn-success pull-xs-right')
+            
     
 block menu
     if user

@@ -9,16 +9,16 @@ block content
                     form(action='/restaurant/add/restaurant', method='post')
                         .form-group
                             label(for='name') Name
-                            input(type='text', name='name', id='name', class='form-control')
+                            input(type='text', name='name', id='name', class='form-control', required)
                         .form-group
                             label(for='address') Address
-                            input(type='text', name='address', id='address', class='form-control')
+                            input(type='text', name='address', id='address', class='form-control', required)
                         .form-group
                             label(for='city') City
-                            input(type='text', name='city', id='city', class='form-control')
+                            input(type='text', name='city', id='city', class='form-control', required)
                         .form-group
                             label(for='zip') Zip Code
-                            input(type='number', name='zip', id='zip', class='form-control', min='00000', max='99999')
+                            input(type='number', name='zip', id='zip', class='form-control', min='00000', max='99999', required)
                         .form-group
                             input(type='submit', name='submit', id='submit', class='form-control btn-primary', value='submit')
          .col-sm-6
@@ -36,10 +36,10 @@ block content
                                         form(action='/restaurant/#{ restaurant._id }/add/food', method='post')
                                             .form-group
                                                 label(for='name') Name of food
-                                                input(type='text', name='name', id='name', class='form-control')
+                                                input(type='text', name='name', id='name', class='form-control', required)
                                             .form-group
                                                 label(for='price') Price
-                                                input(type='number', name='price', id='price', class='form-control', min='0', max='999')
+                                                input(type='number', name='price', id='price', class='form-control', min='0', max='999', required)
                                             .form-group
                                                 label(for='ingredients') Ingredients (Allergies)
                                                 textarea(name='ingredients', rows='6', class='form-control')

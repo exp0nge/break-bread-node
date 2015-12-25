@@ -9,14 +9,14 @@ block content
                 .blockquote(class='card-blockquote')
                     p 
                         | You want to reserve a spot at a restaurant. <br>
-                        a(href='/users/login?type=customer') Customer 
+                        a(href='#{ customer }') Customer 
     .col-sm-6
             div(class='card card-inverse card-info text-xs-center')
                 .card-block
                     .blockquote(class='card-blockquote')                      
                         p
                             | You are a restaurant owner. <br>
-                            a(href='/users/login?type=owner') Restaurant
+                            a(href='/users/login?type=owner') Owner
                         if restaurants
     
     .row

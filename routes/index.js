@@ -15,9 +15,6 @@ router.get('/', function(req, res, next) {
             restaurants: doc 
             });
       });
-      
-  
-  
 });
 
 module.exports = router;

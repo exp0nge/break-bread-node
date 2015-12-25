@@ -1,0 +1,1 @@
+{"_id":{"$oid":"567c8194833eae7464e801bc"},"username":"owner","password":"owner","email":"owner@gmail.com","restaurant":[{"$oid":"567c81a9850ab3d912bee2b2"},{"$oid":"567c85a2cd41828913943aad"},{"$oid":"567c8793fe80044d1134e0c2"}]}

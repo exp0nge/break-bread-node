@@ -8,4 +8,8 @@ router.get('/', function(req, res, next){
         });
 });
 
+router.get('/search/location', function(req, res, next){
+    
+});
+
 module.exports = router;
