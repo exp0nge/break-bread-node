@@ -2,13 +2,26 @@ extends layout
 
 block content
     h1= Login
-    if error
-        h2(style="color:red") #{error}
-    form(name="login", method="post")
-        div.input
-            span.label Login
-            input(type='text', name='username')
-            span.label Password
-            input(type='password', name='password')
-        div.actions
-            input(type='submit', value='login')
+    .row
+        .col-md-6.col-md-offset-3
+            if error
+                .alert.alert-danger.alert-dismissible.fade.in(role='alert')
+                    button(type='button', class='close', data-dismiss='alert', aria-label='Close')
+                        span(aria-hidden='true') &times;
+                    strong #{ error }
+            form(name="login", method="post")
+                .form-group
+                    label(for='username') Login
+                    input(type='text', name='username', class='form-control', id='username' required)
+                    label(for='password') Password
+                    input(type='password', name='password', class='form-control', id='password', required)
+                .form-group
+                    input(type='submit', value='Login', class='form-control btn btn-primary')
+            hr
+            form(name='guestLogin', method='post', action='/users/login/guest')
+                .form-group
+                    span(class='label label-pill label-info pull-xs-right') Quick access
+                    label(for='guestname') Login as a guest 
+                    input(type='text', name='guestname', class='form-control', id='guestname', required)
+                .form-group
+                    input(type='submit', value='Guest Login', class='form-control btn btn-secondary')
