@@ -20,7 +20,7 @@ block content
                             label(for='zip') Zip Code
                             input(type='number', name='zip', id='zip', class='form-control', min='00000', max='99999')
                         .form-group
-                            input(type='submit', name='submit', id='submit', class='form-control', value='submit')
+                            input(type='submit', name='submit', id='submit', class='form-control btn-primary', value='submit')
          .col-sm-6
             .card.card-block
                 .card-title Your restaurants
@@ -44,7 +44,7 @@ block content
                                                 label(for='ingredients') Ingredients (Allergies)
                                                 textarea(name='ingredients', rows='6', class='form-control')
                                             .form-group
-                                                input(type='submit', name='submit', class='form-control', value='submit')  
+                                                input(type='submit', name='submit', class='form-control btn-primary', value='submit')  
                             .card-text
                                 ul(class='list-group')
                                     each item in restaurant.items
