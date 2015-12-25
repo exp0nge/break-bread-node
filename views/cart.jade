@@ -2,7 +2,7 @@ extends layout
 
 block content
     h1= title
-    if cart.length == 0
+    if user.cartSize == 0
         .alert.alert-warning(role='alert')
           | <strong> 0 items in cart </strong>
     else

@@ -89,22 +89,25 @@ router.get('/cart', function(req, res, next){
     if (!req.session.user){
         res.redirect('/users/login?type=customer&next=/customer/cart');
     }
-    if (req.session.user.cart == undefined || Object.keys(req.session.user.cart).length){
-      req.session.user.cart = {};
-      req.session.user.cart.length = 0;
-      res.render('cart', {
-          title: 'Cart',
-          cart: req.session.user.cart,
-          user: req.session.user
-      });
+    function renderEmpty(){
+        req.session.user.cart = {};
+        req.session.user.cartSize = 0;
+        res.render('cart', {
+            title: 'Cart',
+            cart: req.session.user.cart,
+            user: req.session.user
+        });
     }
-    else {
+    if (req.session.user.cart == undefined){
+      renderEmpty();
+    }
+    else if(Object.keys(req.session.user.cart).length > 0)  {
         var cartKeys = Object.keys(req.session.user.cart);
         console.log(cartKeys);
         req.db.get('restaurant').find({ _id: { $in: cartKeys }})
             .success(function(doc){
                 console.log(doc);
-                req.session.user.cart.length = cartKeys.length;
+                req.session.user.cartSize = cartKeys.length;
                 res.render('cart', {
                     title: 'Cart',
                     cart: req.session.user.cart,
@@ -114,6 +117,9 @@ router.get('/cart', function(req, res, next){
             .error(function(err){
                 console.log(err);
             });
+    }
+    else {
+        renderEmpty();
     }
 
 });
