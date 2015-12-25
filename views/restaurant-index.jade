@@ -49,14 +49,3 @@ block content
                                 ul(class='list-group')
                                     each item in restaurant.items
                                         li(class='list-group-item') #{ item.name } - $#{ item.price }
-
-
-block menu
-    if user
-        li(class='nav-item pull-xs-right')
-            span Hello,  #{ user.username }
-        li(class='nav-item pull-xs-right')
-            a(href='/users/logout') Logout
-    else
-        li(class='nav-item pull-xs-right')
-            a(href='/users/login?type=owner') Login

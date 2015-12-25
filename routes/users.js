@@ -27,7 +27,12 @@ router.post('/login', function(req, res){
             if (doc){
                 req.session.user = doc;
                 if (type == 'customer'){
-                    res.redirect('/customer');
+                    if (req.query.next){
+                        res.redirect(req.query.next);
+                    }
+                    else {
+                        res.redirect('/customer');
+                    }
                 }
                 else if (type == 'owner'){
                     res.redirect('/restaurant');

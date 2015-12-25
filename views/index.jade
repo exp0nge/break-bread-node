@@ -19,15 +19,4 @@ block content
                             a(href='/users/login?type=owner') Owner
                         if restaurants
     
-    .row
-        each restaurant in restaurants
-            .col-sm-6
-                div(class='card card-block')
-                    h3(class='card-title') #{ restaurant.name }
-                    if restaurant.items.length > 0
-                        span(class='label label-info') #{ restaurant.items.length } Options
-                    else
-                        span(class='label label-default') #{ restaurant.items.length } Options
-                    p(class='card-text')
-                        |#{ restaurant.address } <br>
-                        |#{ restaurant.city }, #{ restaurant.zip }
+    include restaurants-loop

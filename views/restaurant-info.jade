@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    h1= restaurant.name
+    .row
+        .col-sm-6
+            | #{ restaurant.address } <br>
+            | #{ restaurant.city }, #{ restaurant.zip } <br>
+    .row
+        hr
+        .col-sm-4
+            h4 
+                | Available food for order
+                span(class='label label-info pull-xs-right') #{ restaurant.items.length }
+    .row
+        if restaurant.items.length > 0
+            for food in restaurant.items
+                .col-sm-4
+                    .card.card-block
+                        h3(class='card-title') #{ food.name }
+                        p(class='card-text') $#{ food.price }
+                        if user
+                            form(action='#', method='post')
+                                .form-group
+                                    label(for='qty') Qty
+                                    input(type='number', name='qty', id='qty', class='form-control', min='0', max='20', required)
+                                .form-group
+                                    input(type='submit', name='submit', class='form-control btn-primary', value='Add to cart')
+                        else
+                            a(class='btn btn-primary') Login to add to cart
+            

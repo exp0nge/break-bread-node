@@ -40,6 +40,10 @@ app.use(sessions({
 }));
 
 
+// Index
+
+db.get('restaurant').col.reIndex();
+
 app.use(function(res, req, next){
     res.db = db;
     next();

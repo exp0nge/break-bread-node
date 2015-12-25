@@ -9,7 +9,6 @@ router.get('/', function(req, res, next){
         .success(function(doc){
             req.db.get('restaurant').find({ _id: { $in: doc.restaurant }})
                 .success(function(rests){
-                    console.log(rests);
                     res.render('restaurant-index', 
                     {
                         title: 'Restaurant Dashboard',

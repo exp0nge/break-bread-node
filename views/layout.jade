@@ -10,6 +10,14 @@ html
         ul(class='nav navbar-nav')
             li(class='nav-item')
                 a(class='nav-link', href='/') Home
+             if user
+                li(class='nav-item pull-xs-right')
+                    span Hello, #{ user.username }
+                li(class='nav-item pull-xs-right')
+                    a(href='/users/logout') Logout
+             else
+                li(class='nav-item pull-xs-right')
+                    a(class='nav-link', href='/users/login?type=customer&next=#{ nextUrl }') Login
              block menu
     | <br>
     .container

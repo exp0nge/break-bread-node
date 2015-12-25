@@ -9,10 +9,11 @@ router.get('/', function(req, res, next) {
       })
       .success(function(doc){
           res.render('index', { 
-            title: 'Choose your experience',
-            customer: './customer',
-            restaurant: './restaurant',
-            restaurants: doc 
+                title: 'Choose your experience',
+                customer: './customer',
+                restaurant: './restaurant',
+                restaurants: doc,
+                nextUrl: '/customer'
             });
       });
 });
