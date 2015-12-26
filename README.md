@@ -44,5 +44,5 @@ the project with MongoDB, Express, and Node.js.
 ## Issues
 
 1. If you get `Failed to load c++ bson extension, using pure JS version`: Go to
- `node_modules/mongoose/node_modules/mongodb/node_modules/bson/ext/index.js`
+ `node_modules/monk/node_modules/mongodb/node_modules/bson/ext/index.js`
  and change `bson = require('../build/Release/bson');` to `bson = require('bson');`
