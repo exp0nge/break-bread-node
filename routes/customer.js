@@ -205,7 +205,6 @@ router.get('/orders', function(req, res, next){
                                 transDoc.forEach(function(transaction){
                                     transaction['restaurantInfo'] = restJSON[transaction.restaurant];
                                 });
-                                console.log(transDoc);
                                 res.render('orders', {
                                     title: 'Your Orders',
                                     user: req.session.user,

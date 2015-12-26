@@ -63,15 +63,15 @@ block afterJQ
                     error: (function(err){console.log(err);})
                     });
             }
-            $('.approve').click(function(e){
+            $('body').on('click', '.approve', function(e){
                 orderActionAJAX('approve',  $(this).attr('order-id'));
                 e.preventDefault();
                 });
-            $('.reject').click(function(e){
+            $('body').on('click', '.reject', function(e){
                 orderActionAJAX('reject',  $(this).attr('order-id'));
                 e.preventDefault();
                 });
-            $('.pending').click(function(e){
+            $('body').on('click', '.pending', function(e){
                 orderActionAJAX('pend',  $(this).attr('order-id'));
                 e.preventDefault();
                 });
