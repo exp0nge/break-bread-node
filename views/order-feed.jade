@@ -5,6 +5,28 @@ include feed-item-mixin
 block content
     h1= title
         .label.label-warning.pull-xs-right New items: <span id='newItemCounter'>0</span>
+    .row
+        .col-sm-8.inline-block
+            case sortBy
+                when 'rejected'
+                    a(class='btn btn-info active') Rejected Orders
+                    a(class='btn btn-secondary sortApproved', href='?sort=approved') Approved Orders
+                    a(class='btn btn-secondary sortPending', href='?sort=pending') Pending Orders
+                when 'approved'
+                    a(class='btn btn-secondary sortRejected', href='?sort=rejected') Rejected Orders
+                    a(class='btn btn-info active') Approved Orders
+                    a(class='btn btn-secondary sortPending', href='?sort=pending') Pending Orders
+                when 'pending'
+                    a(class='btn btn-secondary sortRejected', href='?sort=rejected') Rejected Orders
+                    a(class='btn btn-secondary sortApproved', href='?sort=approved') Approved Orders
+                    a(class='btn btn-info active') Pending Orders
+                default
+                    a(class='btn btn-secondary sortRejected', href='?sort=rejected') Rejected Orders
+                    a(class='btn btn-secondary sortApproved', href='?sort=approved') Approved Orders
+                    a(class='btn btn-info active sortPending', href='?sort=pending') Pending Orders
+            
+            
+    hr
     #main
         for order in orders
             if order.approved == sortBy

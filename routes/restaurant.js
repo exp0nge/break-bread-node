@@ -76,6 +76,26 @@ router.post('/:restaurantId/add/food', function(req, res, next){
         });
 });
 
+
+function getRestaurantOrders(req, restaurantId, res, jadeFile, sortBy){
+    req.db.get('restaurant').findById(restaurantId)
+        .success(function(restaurant){
+            req.db.get('transaction').find({restaurant: restaurantId})
+                .success(function(transactions){
+                    res.render(jadeFile, {
+                        title: restaurant.name + ' Feed',
+                        restaurantInfo: restaurant,
+                        host: req.headers.host,
+                        orders: transactions,
+                        sortBy: sortBy,
+                        user: req.session.user
+                    });
+                })
+                .error(function(err){console.log(err);});
+        })
+        .error(function(err){console.log(err)});
+}
+
 router.get('/:restaurantId/feed', function(req, res, next){
     if (!req.session.owner){
         res.redirect('/users/login?type=owner&next=/restaurant/' + req.params.restaurantId + '/feed')
@@ -93,23 +113,7 @@ router.get('/:restaurantId/feed', function(req, res, next){
         res.status(401).send('Unauthorized feed access');
         return;
     }
-    var sortBy = req.query.sort || 'pending';
-    req.db.get('restaurant').findById(restaurantId)
-        .success(function(restaurant){
-            req.db.get('transaction').find({restaurant: restaurantId})
-                .success(function(transactions){
-                    res.render('order-feed', {
-                        title: restaurant.name + ' Feed',
-                        restaurantInfo: restaurant,
-                        host: req.headers.host,
-                        orders: transactions,
-                        sortBy: sortBy,
-                        user: req.session.user
-                    });
-                })
-                .error(function(err){console.log(err);});
-        })
-        .error(function(err){console.log(err)});
+    getRestaurantOrders(req, restaurantId, res, 'order-feed', req.query.sort || 'pending');
 });
 
 router.get('/render/jade/food/item', function(req, res, next){
