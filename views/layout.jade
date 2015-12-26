@@ -16,7 +16,7 @@ html
                     a(class='nav-link', href='/customer') Home
              if user
                 li(class='nav-item pull-xs-right')
-                    span(class='nav-link') Hello, #{ user.username }
+                    div(class='nav-link') Hello, #{ user.username }
                 li(class='nav-item pull-xs-right')
                     a(href='/users/logout', class='nav-link') Logout
                 li(class='nav-item pull-xs-right') 
@@ -24,6 +24,8 @@ html
                         | Cart
                         if user.cartSize > 0
                             span(class='label label-secondary') *
+                li(class='nav-item pull-xs-right')
+                    a(href='/customer/orders', class='nav-link') Orders
              else
                 li(class='nav-item pull-xs-right')
                     a(class='nav-link', href='/users/login?type=customer&next=#{ nextUrl }') Login

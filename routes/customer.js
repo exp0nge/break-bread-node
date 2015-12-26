@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+
 router.get('/', function(req, res, next){
     req.db.get('restaurant').find({}, { limit: 10 })
       .error(function(err){
@@ -154,7 +155,7 @@ router.post('/cart/:restaurantId/payment/charge', function(req, res, next){
     var transaction = {
         'restaurant': restID,
         'paid': true,
-        'approved': false,
+        'approved': 'pending',
         'reservation': {
             'size': req.body.size,
             'date': req.body.date,
@@ -169,7 +170,7 @@ router.post('/cart/:restaurantId/payment/charge', function(req, res, next){
                 { username: req.session.user.username },
                 { $push: { transactions: doc._id }})
                 .success(function(doc){
-                    console.log('success');
+                    res.redirect('/customer/orders');
                 })
                 .error(function(err){
                     console.log(err);
@@ -177,6 +178,52 @@ router.post('/cart/:restaurantId/payment/charge', function(req, res, next){
         })
         .error(function(err){ console.log(err); });
 
+});
+
+router.get('/orders', function(req, res, next){
+    if (!req.session.user){
+        res.redirect('/users/login?type=customer&next=/customer/orders');
+    }
+    req.db.get('customer').findById(req.session.user._id)
+        .success(function(doc){
+            if (doc.transactions.length > 0) {
+                req.db.get('transaction').find({ _id: { $in: doc.transactions }})
+                    .success(function(transDoc){
+                        var restIDs = [];
+                        transDoc.forEach(function(transactionItem){
+                            transactionItem.restaurant = new req.ObjectID(transactionItem.restaurant);
+                            restIDs.push(transactionItem.restaurant);
+                        });
+                        req.db.get('restaurant').find({ _id: { $in: restIDs }})
+                            .success(function(restaurants){
+                                var restJSON = {};
+                                restaurants.forEach(function(restaurant){
+                                    restJSON[restaurant._id] = restaurant;
+                                });
+                                transDoc.forEach(function(transaction){
+                                    transaction['restaurantInfo'] = restJSON[transaction.restaurant];
+                                });
+                                console.log(transDoc);
+                                res.render('orders', {
+                                    title: 'Your Orders',
+                                    user: req.session.user,
+                                    orders: transDoc
+                                });
+                            })
+                            .error(function(err){console.log(err);});
+
+                    })
+                    .error(function(err){console.log(err);});
+            }
+            else {
+                res.render('orders', {
+                    title: 'Your Orders',
+                    user: req.session.user,
+                    orders: []
+                });
+            }
+        })
+        .error(function(err){ console.log(err); });
 });
 
 module.exports = router;
