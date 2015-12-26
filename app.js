@@ -17,6 +17,15 @@ var db = monk('localhost:27017/break-bread')
 
 var app = express();
 
+// Socket IO
+var server = require('http').Server(app);
+var io = require('socket.io')(server)
+
+server.listen(80, function(){
+    console.log("Socket.io on port %s", server.address().port);
+});
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -49,12 +58,24 @@ app.use(function(res, req, next){
     res.ObjectID = function (stringId){
         return ObjectID(stringId);
     }
+    res.broadcastOrder = function(restaurantId, orderId){
+        db.get('transaction').find( {_id: ObjectID(orderId), approved: { $in: ['true', 'pending']} })
+            .success(function(order){
+                console.log(order);
+                io.sockets.emit(restaurantId.toString(), {
+                    orderData: order
+                });
+            })
+            .error(function(err){console.log(err);})
+        };
     next();
 });
 app.use('/', routes);
 app.use('/customer', customer);
 app.use('/restaurant', restaurant);
 app.use('/users', users);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -166,6 +166,8 @@ router.post('/cart/:restaurantId/payment/charge', function(req, res, next){
     }
     req.db.get('transaction').insert(transaction)
         .success(function(doc){
+            // Emit to Socket
+            req.broadcastOrder(restID, doc._id);
             req.db.get('customer').update(
                 { username: req.session.user.username },
                 { $push: { transactions: doc._id }})

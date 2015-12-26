@@ -26,11 +26,11 @@ block content
                 .card-title Your restaurants
                 if restaurants
                     each restaurant in restaurants
-                        .card.card-block 
+                        .card.card-block
                             .card-title 
                                 h5 #{ restaurant.name } 
-                                    a(href='##{ restaurant.name }', class='btn btn-primary btn-sm pull-xs-right', data-toggle='collapse', aria-expanded='false', aria-controls='#{ restaurant.name }') Add food
-        
+                                a(href='##{ restaurant.name }', class='btn btn-primary btn-sm pull-xs-right', data-toggle='collapse', aria-expanded='false', aria-controls='#{ restaurant.name }') Add food
+                                a(class='btn btn-info btn-sm', href='/restaurant/#{restaurant._id}/feed') Order Feed
                                 .collapse(id='#{ restaurant.name }')
                                     .card.card-block
                                         form(action='/restaurant/#{ restaurant._id }/add/food', method='post')

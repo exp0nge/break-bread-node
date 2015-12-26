@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.get('/', function(req, res, next){
     if (!req.session.user){
-        res.redirect('/');
+        res.redirect('/users/login?type=owner&next=/restaurant');
     }
     req.db.get('owner').findById(req.session.user._id)
         .success(function(doc){
@@ -69,6 +69,25 @@ router.post('/:restaurantId/add/food', function(req, res, next){
         .error(function(err){
             console.log(err);
         });
+});
+
+router.get('/:restaurantId/feed', function(req, res, next){
+    var restaurantId = req.params.restaurantId;
+    req.db.get('restaurant').findById(restaurantId).sort({_id: -1})
+        .success(function(restaurant){
+            req.db.get('transaction').find({restaurant: restaurantId})
+                .success(function(transactions){
+                    console.log(transactions);
+                    res.render('order-feed', {
+                        title: restaurantId + ' Order Feed',
+                        restaurantInfo: restaurant,
+                        host: req.headers.host,
+                        orders: transactions
+                    });
+                })
+                .error(function(err){console.log(err);});
+        })
+        .error(function(err){console.log(err)});
 });
 
 

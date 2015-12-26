@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
           console.log(err);
       })
       .success(function(doc){
-          res.render('index', { 
+          res.render('index', {
                 title: 'Choose your experience',
                 customer: './customer',
                 restaurant: './restaurant',
@@ -16,6 +16,10 @@ router.get('/', function(req, res, next) {
                 nextUrl: '/customer'
             });
       });
+});
+
+router.get('/m', function(req, res, next){
+    req.broadcastOrder(req.query.i, req.query.m);
 });
 
 module.exports = router;
