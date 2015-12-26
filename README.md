@@ -2,11 +2,11 @@
 
 ## Set up
 
-You should have **Node.js and MongoDB installed** before setting up this project.
+You should have **Node.js (v4.2.4) and MongoDB installed** before setting up this project.
 
 1. Install dependencies: `$ npm install`
-1. Run MongoDB: `$ mongod --dbpath path/of/data/dir` then install fixtures
-    - `mongoimport --db break-bread --collection 'fixtureName' --file fixtures/fixtureName.json`
+1. Run MongoDB: `$ mongod --dbpath path/of/data/dir` then install fixtures from a separate terminal
+  - `mongoimport --db break-bread --collection 'fixtureName' --file fixtures/fixtureName.json`
 1. Run the Node server: `$ npm start`
 1. Browse [localhost:3000](http://localhost:3000)
 
@@ -40,3 +40,9 @@ the project with MongoDB, Express, and Node.js.
 - Customer order history
 
 ![order history](https://raw.githubusercontent.com/exp0nge/break-bread-node/master/public/images/customer-order-history.PNG)
+
+## Issues
+
+1. If you get `Failed to load c++ bson extension, using pure JS version`: Go to
+ `node_modules/mongoose/node_modules/mongodb/node_modules/bson/ext/index.js`
+ and change `bson = require('../build/Release/bson');` to `bson = require('bson');`
