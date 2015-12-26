@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sessions = require('express-session');
+var jade = require('jade');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -59,14 +60,7 @@ app.use(function(res, req, next){
         return ObjectID(stringId);
     }
     res.broadcastOrder = function(restaurantId, orderId){
-        db.get('transaction').find( {_id: ObjectID(orderId), approved: { $in: ['true', 'pending']} })
-            .success(function(order){
-                console.log(order);
-                io.sockets.emit(restaurantId.toString(), {
-                    orderData: order
-                });
-            })
-            .error(function(err){console.log(err);})
+            io.sockets.emit(restaurantId.toString(), orderId);
         };
     next();
 });

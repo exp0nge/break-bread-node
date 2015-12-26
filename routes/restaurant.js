@@ -73,21 +73,36 @@ router.post('/:restaurantId/add/food', function(req, res, next){
 
 router.get('/:restaurantId/feed', function(req, res, next){
     var restaurantId = req.params.restaurantId;
-    req.db.get('restaurant').findById(restaurantId).sort({_id: -1})
+    var sortBy = req.query.sort || 'pending';
+    req.db.get('restaurant').findById(restaurantId)
         .success(function(restaurant){
             req.db.get('transaction').find({restaurant: restaurantId})
                 .success(function(transactions){
-                    console.log(transactions);
                     res.render('order-feed', {
-                        title: restaurantId + ' Order Feed',
+                        title: restaurant.name + ' Feed',
                         restaurantInfo: restaurant,
                         host: req.headers.host,
-                        orders: transactions
+                        orders: transactions,
+                        sortBy: sortBy
                     });
                 })
                 .error(function(err){console.log(err);});
         })
         .error(function(err){console.log(err)});
+});
+
+router.get('/render/jade/food/item', function(req, res, next){
+    req.db.get('transaction').findById(req.query.tid)
+        .success(function(order){
+            res.render('feed-item-mixin-ajax', {
+                order: order
+            }, function(err, html){
+                console.log(html);
+                console.log(err);
+                res.json({'html': html})
+            });
+        })
+        .error(function(err){console.log(err);});
 });
 
 

@@ -10,7 +10,7 @@ html
         a(class='navbar-brand') Break Bread
         ul(class='nav navbar-nav')
             li(class='nav-item')
-                a(class='nav-link', href='/customer') Home
+                a(class='nav-link', href='/restaurant') Home
              if user
                 li(class='nav-item pull-xs-right')
                     div(class='nav-link') Hello, #{ user.username }
@@ -21,5 +21,7 @@ html
         block content
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js')
+    
+    block afterJQ
 
     include footer
