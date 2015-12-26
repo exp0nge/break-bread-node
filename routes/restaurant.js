@@ -9,12 +9,11 @@ router.get('/', function(req, res, next){
         .success(function(doc){
             req.db.get('restaurant').find({ _id: { $in: doc.restaurant }})
                 .success(function(rests){
-                    res.render('restaurant-index', 
+                    res.render('restaurant-index',
                     {
                         title: 'Restaurant Dashboard',
                         user: req.session.user,
-                        restaurants: rests,
-                        home: '/restaurant'
+                        restaurants: rests
                     });
                 })
                 .error(function(err){
@@ -36,11 +35,11 @@ router.post('/add/restaurant', function(req, res, next){
     }
     req.db.get('restaurant').insert(restaurant);
     req.db.get('owner').update(
-        { 
-            _id: req.session.user._id 
+        {
+            _id: req.session.user._id
         },
-        { 
-            $push: { restaurant: restaurant._id } 
+        {
+            $push: { restaurant: restaurant._id }
         })
         .success(function(doc){
             res.redirect('/restaurant');
@@ -48,7 +47,7 @@ router.post('/add/restaurant', function(req, res, next){
         .error(function(err){
             console.log(err);
         });
-    
+
 });
 
 router.post('/:restaurantId/add/food', function(req, res, next){
@@ -61,8 +60,8 @@ router.post('/:restaurantId/add/food', function(req, res, next){
         {
             _id: req.params.restaurantId
         },
-        { 
-            $push: { items: food } 
+        {
+            $push: { items: food }
         })
         .success(function(doc){
             res.redirect('/restaurant');

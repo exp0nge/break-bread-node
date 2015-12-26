@@ -1,4 +1,4 @@
-extends layout
+extends layout-owner
 
 block content
     .row
@@ -28,9 +28,9 @@ block content
                     each restaurant in restaurants
                         .card.card-block 
                             .card-title 
-                                | #{ restaurant.name } 
-                                a(href='##{ restaurant.name }', class='btn btn-primary btn-sm pull-xs-right', data-toggle='collapse', aria-expanded='false', aria-controls='#{ restaurant.name }') Add food
-                                | <br>
+                                h5 #{ restaurant.name } 
+                                    a(href='##{ restaurant.name }', class='btn btn-primary btn-sm pull-xs-right', data-toggle='collapse', aria-expanded='false', aria-controls='#{ restaurant.name }') Add food
+        
                                 .collapse(id='#{ restaurant.name }')
                                     .card.card-block
                                         form(action='/restaurant/#{ restaurant._id }/add/food', method='post')
@@ -46,6 +46,7 @@ block content
                                             .form-group
                                                 input(type='submit', name='submit', class='form-control btn-primary', value='submit')  
                             .card-text
+                                | Items serving
                                 ul(class='list-group')
                                     each item in restaurant.items
                                         li(class='list-group-item') #{ item.name } - $#{ item.price }
