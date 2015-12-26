@@ -1,0 +1,52 @@
+extends layout
+
+block content
+    if orders.length == 0
+        .row
+            .col-sm-12
+                .card.card-block
+                    h5(class='card-title') No order history
+    else
+        for order in orders
+            .row
+                .col-sm-12
+                    .card.card-block
+                        h3(class='card-title')
+                            | #{ order.restaurantInfo.name }
+                            if order.approved == 'approved'
+                                span(class='label label-success label-pill pull-xs-right') Status: Approved
+                            else if order.approved == 'pending'
+                                span(class='label label-warning label-pill pull-xs-right') Status: Pending
+                            else
+                                span(class='label label-danger label-pill pull-xs-right') Status: Rejected
+                        .card-text
+                            | Items
+                            ul(class='list-group')
+                                for item in order.items
+                                    li(class='list-group-item') 
+                                        | #{ item.item.name }
+                                        - var cost = parseFloat(item.qty) * parseFloat(item.item.price)
+                                        span(class='label label-info label-pill pull-xs-right') Item total: $ #{ cost }
+                                        span(class='label label-primary label-pill pull-xs-right') Qty: #{ item.qty }
+                                        span(class='label label-primary label-pill pull-xs-right') $ #{ item.item.price } ea.
+                            h5(class='pull-xs-right')
+                                hr
+                                | Order total: 
+                                span(class='label label-info label-pill ') $#{ order.reservation.total }
+                        
+                        .row
+                            .col-sm-6
+                                hr
+                                h5 Reservation Info
+                                ul(class='list-group')
+                                    li(class='list-group-item') 
+                                        | Size 
+                                        span(class='label label-primary pull-xs-right') #{ order.reservation.size }
+                                    li(class='list-group-item') 
+                                        | Date 
+                                        span(class='label label-primary pull-xs-right') #{ order.reservation.date }
+                                    li(class='list-group-item') 
+                                        | Time (24-Hr) 
+                                        span(class='label label-primary pull-xs-right') #{ order.reservation.time }
+                                
+                                
