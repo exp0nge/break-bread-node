@@ -103,7 +103,8 @@ router.get('/:restaurantId/feed', function(req, res, next){
                         restaurantInfo: restaurant,
                         host: req.headers.host,
                         orders: transactions,
-                        sortBy: sortBy
+                        sortBy: sortBy,
+                        user: req.session.user
                     });
                 })
                 .error(function(err){console.log(err);});
