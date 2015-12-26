@@ -3,6 +3,8 @@ extends layout-owner
 include feed-item-mixin
 
 block content
+    h1= title
+        .label.label-warning.pull-xs-right New items: <span id='newItemCounter'>0</span>
     #main
         for order in orders
             if order.approved == sortBy
@@ -20,8 +22,35 @@ block afterJQ
                 type: 'get',
                 data: {tid: transactionID},
                 success: function(res){
-                    $('#main').prepend(res.html);
+                    $('#main').append(res.html);
+                    $('#newItemCounter').html($('.newOrder').length);
                     },
                 error: function(err){console.log(err);}
                 });
         });
+    script.
+        $(document).ready(function(){
+            function orderActionAJAX(state, orderId){
+                $.ajax({
+                    url: '/restaurant/order/' + state,
+                    type: 'post',
+                    data: {orderId: orderId},
+                    success: (function(res){
+                        $('#' + orderId).remove();
+                        }),
+                    error: (function(err){console.log(err);})
+                    });
+            }
+            $('.approve').click(function(e){
+                orderActionAJAX('approve',  $(this).attr('order-id'));
+                e.preventDefault();
+                });
+            $('.reject').click(function(e){
+                orderActionAJAX('reject',  $(this).attr('order-id'));
+                e.preventDefault();
+                });
+            $('.pending').click(function(e){
+                orderActionAJAX('pend',  $(this).attr('order-id'));
+                e.preventDefault();
+                });
+            });

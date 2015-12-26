@@ -1,14 +1,15 @@
-mixin statusDropdown(status, link1Text, link2Text, link1, link2)
+mixin statusDropdown(order, status, link1Text, link2Text)
     .btn-group.pull-xs-right
-        button(type='button', class='btn btn btn-primary dropdown-toggle', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')= status
+        button(type='button', class='btn btn dropdown-toggle', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')&attributes(attributes)= status
         .dropdown-menu
-            a.dropdown-item(href=link1)= link1Text
-            a.dropdown-item(href=link2)= link2Text
+            a.dropdown-item(class=link1Text.toLowerCase(), order-id=order._id, href='#')= link1Text
+            a.dropdown-item(class=link2Text.toLowerCase(), order-id=order._id, href='#')= link2Text
 
 mixin feedItem(order)
     .row
         .col-sm-12(id=order._id)
             .card.card-block
+                h5(class='card-title')= order._id
                 .card-text
                     h5 Items
                     ul(class='list-group')
@@ -39,9 +40,9 @@ mixin feedItem(order)
                                 | Time (24-Hr) 
                                 span(class='label label-primary pull-xs-right') #{ order.reservation.time }
                 if order.approved == 'pending'
-                    +statusDropdown('Pending', 'Approve', 'Reject', '/restaurant/order/approve/' + order._id, '/restaurant/order/reject/' + order._id)
+                    +statusDropdown(order, 'Pending', 'Approve', 'Reject')(class='btn-primary')
                 if order.approved == 'rejected'
-                    +statusDropdown('Rejected', 'Approve', 'Pending', '/restaurant/order/approve/' + order._id, '/restaurant/order/pending/' + order._id)
+                    +statusDropdown(order, 'Rejected', 'Approve', 'Pending')(class='btn-danger')
                 if order.approved == 'approved'
-                    +statusDropdown('Approved', 'Pending', 'Reject', '/restaurant/order/pending/' + order._id, '/restaurant/order/reject/' + order._id)
+                    +statusDropdown(order, 'Approved', 'Pending', 'Reject')(class='btn-success')
                 hr

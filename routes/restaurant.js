@@ -78,7 +78,7 @@ router.post('/:restaurantId/add/food', function(req, res, next){
 
 router.get('/:restaurantId/feed', function(req, res, next){
     if (!req.session.owner){
-        res.redirect('/users/login?type=owner&next=/restaurant')
+        res.redirect('/users/login?type=owner&next=/restaurant/' + req.params.restaurantId + '/feed')
         return;
     }
     // Check if owner of restaurant
@@ -124,6 +124,26 @@ router.get('/render/jade/food/item', function(req, res, next){
             });
         })
         .error(function(err){console.log(err);});
+});
+
+
+function changeOrderState(orderId, state, db, res){
+    db.get('transaction').updateById(orderId, { $set: {"approved": state} })
+        .success(function(doc){ res.json({'doc': doc}); })
+        .error(function(err){ console.log(err);})
+}
+
+router.post('/order/approve', function(req, res, next){
+    console.log(req.ObjectID(req.body.orderId));
+    changeOrderState(req.ObjectID(req.body.orderId), 'approved', req.db, res);
+});
+
+router.post('/order/reject', function(req, res, next){
+    changeOrderState(req.ObjectID(req.body.orderId), 'rejected', req.db, res);
+});
+
+router.post('/order/pend', function(req, res, next){
+    changeOrderState(req.ObjectID(req.body.orderId), 'pending', req.db, res);
 });
 
 
