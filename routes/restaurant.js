@@ -7,8 +7,13 @@ router.get('/', function(req, res, next){
     }
     req.db.get('owner').findById(req.session.user._id)
         .success(function(doc){
+            if (doc === null || doc.length === 0){
+                res.redirect('/users/login?type=owner&next=/restaurant')
+                return;
+            }
             req.db.get('restaurant').find({ _id: { $in: doc.restaurant }})
                 .success(function(rests){
+                    req.session.owner = rests;
                     res.render('restaurant-index',
                     {
                         title: 'Restaurant Dashboard',
@@ -72,7 +77,22 @@ router.post('/:restaurantId/add/food', function(req, res, next){
 });
 
 router.get('/:restaurantId/feed', function(req, res, next){
+    if (!req.session.owner){
+        res.redirect('/users/login?type=owner&next=/restaurant')
+        return;
+    }
+    // Check if owner of restaurant
     var restaurantId = req.params.restaurantId;
+    var kick = true;
+    req.session.owner.forEach(function(restaurant){
+        if (restaurant._id === restaurantId){
+            kick = false;
+        }
+    });
+    if (kick){
+        res.status(401).send('Unauthorized feed access');
+        return;
+    }
     var sortBy = req.query.sort || 'pending';
     req.db.get('restaurant').findById(restaurantId)
         .success(function(restaurant){
