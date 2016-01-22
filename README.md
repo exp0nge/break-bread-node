@@ -1,5 +1,7 @@
 # break-bread-node
 
+[![Launch on OpenShift](http://launch-shifter.rhcloud.com/button.svg)](https://breakbread-exp0nge.rhcloud.com/)
+
 ## Set up
 
 You should have **Node.js (v4.2.4) and MongoDB installed** before setting up this project.
